@@ -53,8 +53,8 @@ function updateGallery(index){
 function offerMarkup(){
   const selected=state.offer==='complete';
   return `<div class="offer-title"><span>TODAY'S OFFER</span></div><div class="offer-options">
-    <button type="button" class="offer-card standard ${!selected?'selected':''}" data-offer="standard"><div class="offer-box"><span class="offer-radio"></span><span class="offer-content"><span class="offer-line"><span class="offer-name">Smooth Tea Pack</span><span class="offer-shipping">+ SHIPPING</span></span><span class="offer-save">Save 30%</span></span><span class="offer-prices"><strong>139,000₫</strong><del>199,000₫</del></span></div></button>
-    <button type="button" class="offer-card complete ${selected?'selected':''}" data-offer="complete"><div class="offer-box"><span class="popular">MOST POPULAR</span><span class="offer-top"><span class="offer-radio"></span><span class="offer-content"><span class="offer-line"><span class="offer-name">Calm Tea Box</span><span class="offer-shipping">+ SHIPPING</span></span><span class="offer-save">Save 35%</span></span><span class="offer-prices"><strong>218,000₫</strong><del>308,000₫</del></span></span><span class="bundle-products"><span class="bundle-product"><img src="${imagePath('tra-moc-tam-hero.png')}" alt=""><strong>Mộc Tâm<br>Herbal Tea</strong><span class="bundle-price">139,000₫ <del>199,000₫</del></span></span><span class="bundle-product"><img src="${imagePath('tra-moc-tam-hero.png')}" alt=""><strong>Mộc Tâm<br>Chrysanthemum Tea</strong><span class="bundle-price">79,000₫ <del>109,000₫</del></span></span></span></div></button>
+    <button type="button" class="offer-card standard ${!selected?'selected':''}" data-offer="standard"><div class="offer-box"><span class="offer-radio"></span><span class="offer-content"><span class="offer-line"><span class="offer-name">Smooth Tea Pack</span><span class="offer-shipping">+ SHIPPING</span></span><span class="offer-save">Save 30%</span></span><span class="offer-prices"><strong>$13.99</strong><del>$19.99</del></span></div></button>
+    <button type="button" class="offer-card complete ${selected?'selected':''}" data-offer="complete"><div class="offer-box"><span class="popular">MOST POPULAR</span><span class="offer-top"><span class="offer-radio"></span><span class="offer-content"><span class="offer-line"><span class="offer-name">Calm Tea Box</span><span class="offer-shipping">+ SHIPPING</span></span><span class="offer-save">Save 35%</span></span><span class="offer-prices"><strong>$21.98</strong><del>$30.98</del></span></span><span class="bundle-products"><span class="bundle-product"><img src="${imagePath('tra-moc-tam-hero.png')}" alt=""><strong>Mộc Tâm<br>Herbal Tea</strong><span class="bundle-price">$13.99 <del>$19.99</del></span></span><span class="bundle-product"><img src="${imagePath('tra-moc-tam-hero.png')}" alt=""><strong>Mộc Tâm<br>Chrysanthemum Tea</strong><span class="bundle-price">$7.99 <del>$10.99</del></span></span></span></div></button>
   </div>`;
 }
 function renderOffers(){ $('#offer-section').innerHTML=offerMarkup(); }
@@ -89,8 +89,8 @@ function renderBenefits(){ $('#benefit-list').innerHTML=DATA.benefits.map(([glyp
 function renderStats(){ $('#stats').innerHTML=DATA.stats.map(([num,body])=>`<div class="stat"><span class="stat-ring">${num}</span><p>${body}</p></div>`).join(''); }
 function renderFaq(){ $('#faq-list').innerHTML=DATA.faq.map(([glyph,title,body])=>`<details class="faq-item"><summary><span class="faq-icon">${icon(glyph)}</span><span>${title}</span><span class="faq-chevron">${icon('caret')}</span></summary><div class="faq-answer">${body}</div></details>`).join(''); }
 
-const cart = {items:[{name:'Mộc Tâm Herbal Tea',regular:199000,price:139000,image:'tra-moc-tam-hero.png',tag:'Calm Tea Box'},{name:'Mộc Tâm Chrysanthemum Tea',regular:109000,price:79000,image:'tra-moc-tam-hero.png'}]};
-const money = value => `${value.toLocaleString('en-US')}₫`;
+const cart = {items:[{name:'Mộc Tâm Herbal Tea',regular:19.99,price:13.99,image:'tra-moc-tam-hero.png',tag:'Calm Tea Box'},{name:'Mộc Tâm Chrysanthemum Tea',regular:10.99,price:7.99,image:'tra-moc-tam-hero.png'}]};
+const money = value => `$${value.toFixed(2)}`;
 function renderCart(){
   cart.items.forEach(item=>{if(!item.qty)item.qty=1});
   $('#cart-items').innerHTML=cart.items.map((item,i)=>`<div class="cart-item"><img src="${imagePath(item.image)}" alt=""><div class="cart-item-copy"><h3>${item.name}</h3><div class="cart-item-prices"><del>${money(item.regular)}</del><strong>${money(item.price)}</strong>${item.tag?`<span class="cart-tag">${item.tag}</span>`:''}</div><div class="cart-item-actions"><div class="qty"><button type="button" data-cart="decrease" data-index="${i}" aria-label="Decrease quantity for ${item.name}">${icon('minus')}</button><input value="${item.qty}" aria-label="Quantity for ${item.name}" readonly><button type="button" data-cart="increase" data-index="${i}" aria-label="Increase quantity for ${item.name}">${icon('plus')}</button></div><button class="remove-item" type="button" data-cart="remove" data-index="${i}" aria-label="Remove ${item.name}">${icon('trash')}</button><span class="cart-save">${money((item.regular-item.price)*item.qty)} saved</span></div></div></div>`).join('');
@@ -102,7 +102,7 @@ function addToCart(){
   if(state.offer==='complete'){
     cart.items.forEach(item=>{item.qty=(item.qty||1)+1});
   }else{
-    const product=cart.items.find(item=>item.name.startsWith('Mộc Tâm Herbal'));if(product)product.qty=(product.qty||1)+1;else cart.items.unshift({name:'Mộc Tâm Herbal Tea',regular:199000,price:139000,image:'tra-moc-tam-hero.png',qty:1});
+    const product=cart.items.find(item=>item.name.startsWith('Mộc Tâm Herbal'));if(product)product.qty=(product.qty||1)+1;else cart.items.unshift({name:'Mộc Tâm Herbal Tea',regular:19.99,price:13.99,image:'tra-moc-tam-hero.png',qty:1});
   }
   renderCart();setCart(true);
 }
