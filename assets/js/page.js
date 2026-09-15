@@ -100,4 +100,19 @@
     form.querySelector('.local-form-message')?.replaceChildren(document.createTextNode(form.dataset.success || 'Thank you.'));
     form.classList.add('is-submitted');
   }));
+
+  const hero = $('.home-hero');
+  if (hero) {
+    const slides = hero.querySelector('.home-hero-slides');
+    const images = [...slides.querySelectorAll('img')];
+    let current = 0;
+    const show = index => {
+      current = (index + images.length) % images.length;
+      slides.style.transform = `translateX(-${current * 100}%)`;
+      images.forEach((image, i) => image.setAttribute('aria-hidden', String(i !== current)));
+    };
+    hero.querySelector('.home-hero-prev').addEventListener('click', () => show(current - 1));
+    hero.querySelector('.home-hero-next').addEventListener('click', () => show(current + 1));
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(() => show(current + 1), 5000);
+  }
 })();

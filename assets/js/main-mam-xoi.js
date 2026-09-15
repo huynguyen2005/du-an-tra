@@ -1,47 +1,46 @@
 const DATA = {
-  gallery: ['tra-moc-tam-hero.png','tra-moc-tam-gallery-2.png','tra-moc-tam-gallery-3.png','tra-moc-tam-gallery-4.png','tra-moc-tam-gallery-5.png'],
+  gallery: ['tra-mam-xoi-1.jpg','tra-mam-xoi-3.jpg','tra-mam-xoi-4.jpg','tra-mam-xoi-2.jpg'],
   features: [
-    ['flower','Hand-picked herbal tea','Natural tea leaves, gently fragrant'],
-    ['warm','Smooth, easy-drinking taste','A gentle cup of tea every day'],
-    ['shield','Freshly sealed packaging','Locks in flavor and quality'],
-    ['heart','Calm, every day','Nourishing your moments of relaxation']
+    ['flower','Four natural herbs','Raspberry leaf, Pueraria mirifica, red vine & stevia'],
+    ['warm','Gentle daily ritual','A warm, comforting cup any time of day'],
+    ['shield','100% natural','No artificial flavoring or coloring'],
+    ['heart','For women’s wellness','A thoughtful companion for your daily routine']
   ],
   steps: [
-    ['Warm the teapot','Rinse the pot and prepare water at around 85–90°C.'],
-    ['Add the tea leaves','Use the amount of tea that suits your taste.'],
-    ['Steep the tea','Wait 3–5 minutes for the leaves to release their aroma and smooth flavor.'],
-    ['Enjoy your tea','Pour into a cup, savor the natural aroma, and relax.'],
-    ['Steep a second time','The leaves still hold their flavor for another round of water.']
+    ['Boil the water','Heat water to around 90–95°C.'],
+    ['Steep one tea bag','Steep for 5–7 minutes in a covered cup.'],
+    ['Enjoy warm','Sip slowly — most people enjoy 2–3 cups a day.'],
+    ['Store with care','Reseal the pack and keep it in a cool, dry place.']
   ],
   stories: [
-    [null,'A wonderfully gentle aroma','The tea is lightly fragrant, smooth and easy to drink. I brew a small pot every afternoon to unwind.','Ngoc Anh, Hanoi'],
-    [null,'Beautiful as a gift','Elegant packaging, naturally fragrant tea. I chose Mộc Tâm as a gift for my family.','Minh Trang, Da Nang'],
-    [null,'A peaceful ritual','Just a few minutes brewing tea is enough to slow the evening down.','Thu Ha, Ho Chi Minh City']
+    [null,'A comforting part of my routine','I brew a cup every morning — the aroma is gentle and it’s easy to enjoy.','Thuy Linh, Hanoi'],
+    [null,'A thoughtful gift for my sister','She loved the packaging, and it’s become part of her daily ritual.','Bao Tran, Can Tho'],
+    [null,'Simple and calming','A warm cup in the afternoon helps me slow down and feel more at ease.','Hoai Thu, Hue']
   ],
-  benefits: [['flower','Natural ingredients','Carefully selected tea and herbs with a clean, pure flavor.'],['ritual','A relaxing ritual','Set aside a small quiet moment for yourself every day.'],['warm','Gentle aroma','Awaken your senses with a warm cup of tea.'],['heart','A calming gift','A thoughtful gift for someone you love.']],
-  stats: [['100%','natural tea and herb aromas'],['3–5','minutes to steep a smooth cup'],['0','artificial coloring']],
+  benefits: [['flower','Four herbs, one cup','Raspberry leaf, Pueraria mirifica, red vine, and stevia in every bag.'],['ritual','A daily moment for you','Set aside a few minutes to care for yourself, every day.'],['warm','Naturally caffeine-free','A warm cup you can enjoy any time, morning or night.'],['heart','A gift of care','Thoughtful packaging, perfect for someone you love.']],
+  stats: [['4','natural herbs in every cup'],['20','tea bags per box'],['0','artificial coloring or flavoring']],
   miniReviews: [
-    ['tra-moc-tam-hero.png','Smooth tea flavor, light aftertaste, and very easy to drink.','Lan Anh'],
-    ['tra-moc-tam-hero.png','A warm cup of tea helps me unwind after a long day.','Khanh Linh'],
-    ['tra-moc-tam-hero.png','Neat, well-made product, great for gifting.','Duc Minh']
+    ['tra-mam-xoi-1.jpg','A gentle, easy habit I look forward to every day.','Ngoc Mai'],
+    ['tra-mam-xoi-1.jpg','Nicely packaged — makes a thoughtful gift.','Thanh Huyen'],
+    ['tra-mam-xoi-1.jpg','Warm and comforting, especially in the evening.','Kim Anh']
   ],
-  accordions: [['ritual','How to brew','Use 85–90°C water and steep for 3–5 minutes. Adjust the amount of tea to taste.'],['shipping','Shipping','Free shipping on eligible orders. Orders are processed within 1–2 business days.'],['shield','Mộc Tâm promise','Tea is carefully selected and packaged, with returns supported if the product has a seller defect.']],
-  faq: [['clock','How long should I steep the tea?','Steep for 3–5 minutes for the leaves to open up. Adjust the time for a bolder or lighter taste.'],['ritual','How many times can I re-steep it?','Depending on the tea, you can steep it again 2–3 times.'],['flower','Does the tea contain flavoring?','Mộc Tâm favors the natural flavor of tea and herbs.'],['bolt','How should I store it?','Reseal tightly after opening and keep the tea somewhere dry, away from direct sunlight.'],['group','Who is it for?','This tea suits anyone who enjoys a gentle daily tea ritual.'],['shield','What if I need support?','Contact Mộc Tâm for quick help with products and orders.']]
+  accordions: [['ritual','How to brew','Steep one tea bag in hot water (90–95°C) for 5–7 minutes. Most people enjoy 2–3 cups a day.'],['shipping','Shipping','Free shipping on eligible orders. Orders are processed within 1–2 business days.'],['shield','Mộc Tâm promise','Each box holds 20 tea bags x 4g, carefully sealed for freshness, with returns supported for seller defects.']],
+  faq: [['clock','How long should I steep it?','Steep for 5–7 minutes so the herbs fully release their aroma and flavor.'],['group','Who is this tea for?','Women looking for a gentle daily herbal tea ritual.'],['flower','Does it contain caffeine?','No — this is a naturally caffeine-free herbal blend.'],['bolt','How should I store it?','Reseal tightly after opening and keep it in a cool, dry place away from direct sunlight.'],['ritual','How many cups a day?','Most people enjoy 2–3 cups a day.'],['shield','What if I need support?','Contact Mộc Tâm for quick help with products and orders.']]
 };
 
 const ICONS = window.SOURCE_ICONS;
 const icon = name => window.sourceIcon(name);
 const imagePath = name => `assets/images/${name}`;
 
-const state = { gallery:0, story:0, mini:0, offer:'complete', menu:false, cart:false, feedbackRating:5 };
+const state = { gallery:0, story:0, mini:0, offer:'complete', menu:false, cart:false };
 const $ = selector => document.querySelector(selector);
 
 function renderFeatures(){
   $('#feature-grid').innerHTML = DATA.features.map(([glyph,title,desc]) => `<div class="feature"><div class="feature-icon">${icon(glyph)}</div><div class="feature-title">${title}</div><div class="feature-desc">${desc}</div></div>`).join('');
 }
 function renderGallery(){
-  $('.gallery-track').innerHTML = DATA.gallery.map((src,i)=>`<div class="gallery-slide" aria-hidden="${i!==0}"><img src="${imagePath(src)}" alt="Mộc Tâm herbal tea"></div>`).join('');
-  $('.thumbnail-track').innerHTML = DATA.gallery.map((src,i)=>`<button type="button" class="thumbnail ${i===0?'active':''}" data-gallery="${i}" aria-label="View tea photo ${i+1}"><img src="${imagePath(src)}" alt="Mộc Tâm herbal tea"></button>`).join('');
+  $('.gallery-track').innerHTML = DATA.gallery.map((src,i)=>`<div class="gallery-slide" aria-hidden="${i!==0}"><img src="${imagePath(src)}" alt="Mộc Tâm Raspberry Leaf Tea"></div>`).join('');
+  $('.thumbnail-track').innerHTML = DATA.gallery.map((src,i)=>`<button type="button" class="thumbnail ${i===0?'active':''}" data-gallery="${i}" aria-label="View tea photo ${i+1}"><img src="${imagePath(src)}" alt="Mộc Tâm Raspberry Leaf Tea"></button>`).join('');
   $('.gallery-dots').innerHTML = DATA.gallery.map((_,i)=>`<button type="button" class="${i===0?'active':''}" data-gallery="${i}" aria-label="Load slide 1 of ${i+1}"></button>`).join('');
 }
 function updateGallery(index){
@@ -53,8 +52,8 @@ function updateGallery(index){
 function offerMarkup(){
   const selected=state.offer==='complete';
   return `<div class="offer-title"><span>TODAY'S OFFER</span></div><div class="offer-options">
-    <button type="button" class="offer-card standard ${!selected?'selected':''}" data-offer="standard"><div class="offer-box"><span class="offer-radio"></span><span class="offer-content"><span class="offer-line"><span class="offer-name">Smooth Tea Pack</span><span class="offer-shipping">+ SHIPPING</span></span><span class="offer-save">Save 30%</span></span><span class="offer-prices"><strong>139,000₫</strong><del>199,000₫</del></span></div></button>
-    <button type="button" class="offer-card complete ${selected?'selected':''}" data-offer="complete"><div class="offer-box"><span class="popular">MOST POPULAR</span><span class="offer-top"><span class="offer-radio"></span><span class="offer-content"><span class="offer-line"><span class="offer-name">Calm Tea Box</span><span class="offer-shipping">+ SHIPPING</span></span><span class="offer-save">Save 35%</span></span><span class="offer-prices"><strong>218,000₫</strong><del>308,000₫</del></span></span><span class="bundle-products"><span class="bundle-product"><img src="${imagePath('tra-moc-tam-hero.png')}" alt=""><strong>Mộc Tâm<br>Herbal Tea</strong><span class="bundle-price">139,000₫ <del>199,000₫</del></span></span><span class="bundle-product"><img src="${imagePath('tra-moc-tam-hero.png')}" alt=""><strong>Mộc Tâm<br>Chrysanthemum Tea</strong><span class="bundle-price">79,000₫ <del>109,000₫</del></span></span></span></div></button>
+    <button type="button" class="offer-card standard ${!selected?'selected':''}" data-offer="standard"><div class="offer-box"><span class="offer-radio"></span><span class="offer-content"><span class="offer-line"><span class="offer-name">Single Box</span><span class="offer-shipping">+ SHIPPING</span></span><span class="offer-save">Save 25%</span></span><span class="offer-prices"><strong>149,000₫</strong><del>199,000₫</del></span></div></button>
+    <button type="button" class="offer-card complete ${selected?'selected':''}" data-offer="complete"><div class="offer-box"><span class="popular">MOST POPULAR</span><span class="offer-top"><span class="offer-radio"></span><span class="offer-content"><span class="offer-line"><span class="offer-name">2-Box Bundle</span><span class="offer-shipping">+ SHIPPING</span></span><span class="offer-save">Save 35%</span></span><span class="offer-prices"><strong>258,000₫</strong><del>398,000₫</del></span></span><span class="bundle-products"><span class="bundle-product"><img src="${imagePath('tra-mam-xoi-1.jpg')}" alt=""><strong>Trà Mâm Xôi<br>Mộc Tâm</strong><span class="bundle-price">129,000₫ <del>199,000₫</del></span></span><span class="bundle-product"><img src="${imagePath('tra-mam-xoi-1.jpg')}" alt=""><strong>Trà Mâm Xôi<br>Mộc Tâm</strong><span class="bundle-price">129,000₫ <del>199,000₫</del></span></span></span></div></button>
   </div>`;
 }
 function renderOffers(){ $('#offer-section').innerHTML=offerMarkup(); }
@@ -75,21 +74,12 @@ function updateStory(index){
   if(innerWidth<990) $('#story-grid').style.transform=`translateX(-${state.story*360}px)`;
   document.querySelectorAll('[data-story]').forEach(el=>el.classList.toggle('active',Number(el.dataset.story)===state.story));
 }
-function renderFeedbackStars(){
-  $('#feedback-stars').innerHTML=[1,2,3,4,5].map(n=>`<button type="button" class="${n<=state.feedbackRating?'active':''}" data-star="${n}" aria-label="${n} star${n>1?'s':''}">${icon('star')}</button>`).join('');
-}
-function renderDelivery(){
-  const fmt=d=>d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
-  const start=new Date();start.setDate(start.getDate()+3);
-  const end=new Date();end.setDate(end.getDate()+6);
-  $('#delivery-line').innerHTML=`<span class="delivery-icon">${icon('shipping')}</span><span>Estimated delivery: <strong>${fmt(start)} – ${fmt(end)}</strong></span>`;
-}
 function renderSteps(){ $('#steps').innerHTML=DATA.steps.map(([title,body],i)=>`<div class="step"><span class="step-number">${i+1}</span><h3>${title}</h3><p>${body}</p></div>`).join(''); }
 function renderBenefits(){ $('#benefit-list').innerHTML=DATA.benefits.map(([glyph,title,body])=>`<div class="benefit"><h3>${icon(glyph)}${title}</h3><p>${body}</p></div>`).join(''); }
 function renderStats(){ $('#stats').innerHTML=DATA.stats.map(([num,body])=>`<div class="stat"><span class="stat-ring">${num}</span><p>${body}</p></div>`).join(''); }
 function renderFaq(){ $('#faq-list').innerHTML=DATA.faq.map(([glyph,title,body])=>`<details class="faq-item"><summary><span class="faq-icon">${icon(glyph)}</span><span>${title}</span><span class="faq-chevron">${icon('caret')}</span></summary><div class="faq-answer">${body}</div></details>`).join(''); }
 
-const cart = {items:[{name:'Mộc Tâm Herbal Tea',regular:199000,price:139000,image:'tra-moc-tam-hero.png',tag:'Calm Tea Box'},{name:'Mộc Tâm Chrysanthemum Tea',regular:109000,price:79000,image:'tra-moc-tam-hero.png'}]};
+const cart = {items:[{name:'Trà Mâm Xôi Tứ Vị',regular:199000,price:129000,image:'tra-mam-xoi-1.jpg',tag:'2-Box Bundle',qty:2}]};
 const money = value => `${value.toLocaleString('en-US')}₫`;
 function renderCart(){
   cart.items.forEach(item=>{if(!item.qty)item.qty=1});
@@ -102,7 +92,7 @@ function addToCart(){
   if(state.offer==='complete'){
     cart.items.forEach(item=>{item.qty=(item.qty||1)+1});
   }else{
-    const product=cart.items.find(item=>item.name.startsWith('Mộc Tâm Herbal'));if(product)product.qty=(product.qty||1)+1;else cart.items.unshift({name:'Mộc Tâm Herbal Tea',regular:199000,price:139000,image:'tra-moc-tam-hero.png',qty:1});
+    const product=cart.items.find(item=>item.name.startsWith('Trà Mâm Xôi'));if(product)product.qty=(product.qty||1)+1;else cart.items.unshift({name:'Trà Mâm Xôi Tứ Vị',regular:199000,price:149000,image:'tra-mam-xoi-1.jpg',qty:1});
   }
   renderCart();setCart(true);
 }
@@ -114,20 +104,11 @@ function setupInteractions(){
     const offer=event.target.closest('[data-offer]');if(offer){state.offer=offer.dataset.offer;renderOffers();return}
     const mini=event.target.closest('[data-mini]');if(mini){state.mini=Number(mini.dataset.mini);renderMiniReviews();return}
     const story=event.target.closest('[data-story]');if(story){updateStory(Number(story.dataset.story));return}
-    const star=event.target.closest('[data-star]');if(star){state.feedbackRating=Number(star.dataset.star);renderFeedbackStars();return}
     const cartAction=event.target.closest('[data-cart]');if(cartAction){const item=cart.items[Number(cartAction.dataset.index)];const action=cartAction.dataset.cart;if(action==='remove')cart.items.splice(Number(cartAction.dataset.index),1);if(action==='increase')item.qty++;if(action==='decrease')item.qty=Math.max(1,item.qty-1);renderCart();return}
     if(event.target.closest('.add-to-cart')){addToCart();return}
     if(event.target.closest('.cart-toggle')){setCart(true);return}if(event.target.closest('.cart-close,.cart-backdrop')){setCart(false);return}
     if(event.target.closest('.menu-toggle')){setMenu(true);return}if(event.target.closest('.mobile-menu-close,.menu-backdrop,.mobile-menu a')){setMenu(false);return}
     if(event.target.closest('.search-toggle')){$('.search-panel').classList.add('is-open');$('.search-panel').setAttribute('aria-hidden','false');$('#search-input').focus();return}if(event.target.closest('.search-close')){$('.search-panel').classList.remove('is-open');return}
-  });
-  $('#feedback-form').addEventListener('submit',event=>{
-    event.preventDefault();
-    const body=$('#feedback-text').value.trim();
-    if(!body)return;
-    event.target.reset();
-    state.feedbackRating=5;renderFeedbackStars();
-    alert('Thanks for your feedback!');
   });
   let startX=0;$('.gallery-stage').addEventListener('pointerdown',e=>{startX=e.clientX});$('.gallery-stage').addEventListener('pointerup',e=>{const delta=e.clientX-startX;if(Math.abs(delta)>40)updateGallery(state.gallery+(delta<0?1:-1))});
   window.addEventListener('resize',()=>updateStory(state.story));
@@ -136,4 +117,4 @@ function setupInteractions(){
 function setupReveal(){
   const sections=document.querySelectorAll('.reveal-section');const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add('is-visible')}),{threshold:.12});sections.forEach(section=>observer.observe(section));
 }
-renderFeatures();renderGallery();renderOffers();renderMiniReviews();renderAccordions();renderStories();renderFeedbackStars();renderDelivery();renderSteps();renderBenefits();renderStats();renderFaq();renderCart();setupInteractions();setupReveal();
+renderFeatures();renderGallery();renderOffers();renderMiniReviews();renderAccordions();renderStories();renderSteps();renderBenefits();renderStats();renderFaq();renderCart();setupInteractions();setupReveal();
