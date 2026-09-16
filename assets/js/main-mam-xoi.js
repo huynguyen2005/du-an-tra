@@ -123,6 +123,7 @@ function setupInteractions(){
     alert('Thanks for your feedback!');
   });
   let startX=0;$('.gallery-stage').addEventListener('pointerdown',e=>{startX=e.clientX});$('.gallery-stage').addEventListener('pointerup',e=>{const delta=e.clientX-startX;if(Math.abs(delta)>40)updateGallery(state.gallery+(delta<0?1:-1))});
+  let storyStartX=0,storyStartY=0;$('.stories-viewport').addEventListener('pointerdown',e=>{storyStartX=e.clientX;storyStartY=e.clientY});$('.stories-viewport').addEventListener('pointerup',e=>{const deltaX=e.clientX-storyStartX,deltaY=e.clientY-storyStartY;if(innerWidth<990&&Math.abs(deltaX)>40&&Math.abs(deltaX)>Math.abs(deltaY))updateStory(state.story+(deltaX<0?1:-1))});
   window.addEventListener('resize',()=>updateStory(state.story));
   window.addEventListener('keydown',event=>{if(event.key==='Escape'){setCart(false);setMenu(false);$('.search-panel').classList.remove('is-open')}});
 }
