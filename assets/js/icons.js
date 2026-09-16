@@ -86,7 +86,7 @@ window.sourceStars = count => Array.from({length: count || 5}, () => window.SOUR
 window.sourcePayment = name => window.SOURCE_PAYMENTS[name] || '';
 
 function hydrateStaticIcons(){
-  const materialNames = ['redeem','verified_user','local_shipping'];
+  const materialNames = ['redeem','verified_user','local_shipping','schedule'];
   document.querySelectorAll('.announcement-icon').forEach((el, i) => {
     el.className = 'announcement-icon material-icon material-symbols-outlined';
     el.textContent = materialNames[i] || '';

@@ -49,6 +49,7 @@ function updateGallery(index){
   $('.gallery-track').style.transform=`translateX(-${state.gallery*100}%)`;
   document.querySelectorAll('[data-gallery]').forEach(el=>el.classList.toggle('active',Number(el.dataset.gallery)===state.gallery));
   document.querySelectorAll('.gallery-slide').forEach((el,i)=>el.setAttribute('aria-hidden',String(i!==state.gallery)));
+  document.querySelector('.thumbnail.active')?.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'});
 }
 function offerMarkup(){
   const selected=state.offer==='complete';
@@ -72,7 +73,7 @@ function renderStories(){
 }
 function updateStory(index){
   state.story=(index+DATA.stories.length)%DATA.stories.length;
-  if(innerWidth<990) $('#story-grid').style.transform=`translateX(-${state.story*360}px)`;
+  if(innerWidth<990){const cards=$('#story-grid').children;const step=cards[1]?cards[1].offsetLeft-cards[0].offsetLeft:0;$('#story-grid').style.transform=`translateX(-${state.story*step}px)`}
   document.querySelectorAll('[data-story]').forEach(el=>el.classList.toggle('active',Number(el.dataset.story)===state.story));
 }
 function renderFeedbackStars(){
@@ -131,6 +132,7 @@ function setupInteractions(){
   });
   let startX=0;$('.gallery-stage').addEventListener('pointerdown',e=>{startX=e.clientX});$('.gallery-stage').addEventListener('pointerup',e=>{const delta=e.clientX-startX;if(Math.abs(delta)>40)updateGallery(state.gallery+(delta<0?1:-1))});
   let storyStartX=0,storyStartY=0;$('.stories-viewport').addEventListener('pointerdown',e=>{storyStartX=e.clientX;storyStartY=e.clientY});$('.stories-viewport').addEventListener('pointerup',e=>{const deltaX=e.clientX-storyStartX,deltaY=e.clientY-storyStartY;if(innerWidth<990&&Math.abs(deltaX)>40&&Math.abs(deltaX)>Math.abs(deltaY))updateStory(state.story+(deltaX<0?1:-1))});
+  let miniStartX=0,miniStartY=0;$('#mini-reviews').addEventListener('pointerdown',e=>{miniStartX=e.clientX;miniStartY=e.clientY});$('#mini-reviews').addEventListener('pointerup',e=>{const deltaX=e.clientX-miniStartX,deltaY=e.clientY-miniStartY;if(Math.abs(deltaX)>40&&Math.abs(deltaX)>Math.abs(deltaY)){state.mini=(state.mini+(deltaX<0?1:-1)+DATA.miniReviews.length)%DATA.miniReviews.length;renderMiniReviews()}});
   window.addEventListener('resize',()=>updateStory(state.story));
   window.addEventListener('keydown',event=>{if(event.key==='Escape'){setCart(false);setMenu(false);$('.search-panel').classList.remove('is-open')}});
 }
