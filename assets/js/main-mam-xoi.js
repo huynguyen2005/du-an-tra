@@ -32,7 +32,7 @@ const ICONS = window.SOURCE_ICONS;
 const icon = name => window.sourceIcon(name);
 const imagePath = name => `assets/images/${name}`;
 
-const state = { gallery:0, story:0, mini:0, offer:'complete', menu:false, cart:false };
+const state = { gallery:0, story:0, mini:0, offer:'complete', menu:false, cart:false, feedbackRating:5 };
 const $ = selector => document.querySelector(selector);
 
 function renderFeatures(){
@@ -52,8 +52,8 @@ function updateGallery(index){
 function offerMarkup(){
   const selected=state.offer==='complete';
   return `<div class="offer-title"><span>TODAY'S OFFER</span></div><div class="offer-options">
-    <button type="button" class="offer-card standard ${!selected?'selected':''}" data-offer="standard"><div class="offer-box"><span class="offer-radio"></span><span class="offer-content"><span class="offer-line"><span class="offer-name">Single Box</span><span class="offer-shipping">+ SHIPPING</span></span><span class="offer-save">Save 25%</span></span><span class="offer-prices"><strong>149,000₫</strong><del>199,000₫</del></span></div></button>
-    <button type="button" class="offer-card complete ${selected?'selected':''}" data-offer="complete"><div class="offer-box"><span class="popular">MOST POPULAR</span><span class="offer-top"><span class="offer-radio"></span><span class="offer-content"><span class="offer-line"><span class="offer-name">2-Box Bundle</span><span class="offer-shipping">+ SHIPPING</span></span><span class="offer-save">Save 35%</span></span><span class="offer-prices"><strong>258,000₫</strong><del>398,000₫</del></span></span><span class="bundle-products"><span class="bundle-product"><img src="${imagePath('tra-mam-xoi-1.jpg')}" alt=""><strong>Trà Mâm Xôi<br>Mộc Tâm</strong><span class="bundle-price">129,000₫ <del>199,000₫</del></span></span><span class="bundle-product"><img src="${imagePath('tra-mam-xoi-1.jpg')}" alt=""><strong>Trà Mâm Xôi<br>Mộc Tâm</strong><span class="bundle-price">129,000₫ <del>199,000₫</del></span></span></span></div></button>
+    <button type="button" class="offer-card standard ${!selected?'selected':''}" data-offer="standard"><div class="offer-box"><span class="offer-radio"></span><span class="offer-content"><span class="offer-line"><span class="offer-name">Single Box</span><span class="offer-shipping">+ SHIPPING</span></span><span class="offer-save">Save 25%</span></span><span class="offer-prices"><strong>$14.99</strong><del>$19.99</del></span></div></button>
+    <button type="button" class="offer-card complete ${selected?'selected':''}" data-offer="complete"><div class="offer-box"><span class="popular">MOST POPULAR</span><span class="offer-top"><span class="offer-radio"></span><span class="offer-content"><span class="offer-line"><span class="offer-name">2-Box Bundle</span><span class="offer-shipping">+ SHIPPING</span></span><span class="offer-save">Save 35%</span></span><span class="offer-prices"><strong>$25.98</strong><del>$39.98</del></span></span><span class="bundle-products"><span class="bundle-product"><img src="${imagePath('tra-mam-xoi-1.jpg')}" alt=""><strong>Trà Mâm Xôi<br>Mộc Tâm</strong><span class="bundle-price">$12.99 <del>$19.99</del></span></span><span class="bundle-product"><img src="${imagePath('tra-mam-xoi-1.jpg')}" alt=""><strong>Trà Mâm Xôi<br>Mộc Tâm</strong><span class="bundle-price">$12.99 <del>$19.99</del></span></span></span></div></button>
   </div>`;
 }
 function renderOffers(){ $('#offer-section').innerHTML=offerMarkup(); }
@@ -74,13 +74,16 @@ function updateStory(index){
   if(innerWidth<990) $('#story-grid').style.transform=`translateX(-${state.story*360}px)`;
   document.querySelectorAll('[data-story]').forEach(el=>el.classList.toggle('active',Number(el.dataset.story)===state.story));
 }
+function renderFeedbackStars(){
+  $('#feedback-stars').innerHTML=[1,2,3,4,5].map(n=>`<button type="button" class="${n<=state.feedbackRating?'active':''}" data-star="${n}" aria-label="${n} star${n>1?'s':''}">${icon('star')}</button>`).join('');
+}
 function renderSteps(){ $('#steps').innerHTML=DATA.steps.map(([title,body],i)=>`<div class="step"><span class="step-number">${i+1}</span><h3>${title}</h3><p>${body}</p></div>`).join(''); }
 function renderBenefits(){ $('#benefit-list').innerHTML=DATA.benefits.map(([glyph,title,body])=>`<div class="benefit"><h3>${icon(glyph)}${title}</h3><p>${body}</p></div>`).join(''); }
 function renderStats(){ $('#stats').innerHTML=DATA.stats.map(([num,body])=>`<div class="stat"><span class="stat-ring">${num}</span><p>${body}</p></div>`).join(''); }
 function renderFaq(){ $('#faq-list').innerHTML=DATA.faq.map(([glyph,title,body])=>`<details class="faq-item"><summary><span class="faq-icon">${icon(glyph)}</span><span>${title}</span><span class="faq-chevron">${icon('caret')}</span></summary><div class="faq-answer">${body}</div></details>`).join(''); }
 
-const cart = {items:[{name:'Trà Mâm Xôi Tứ Vị',regular:199000,price:129000,image:'tra-mam-xoi-1.jpg',tag:'2-Box Bundle',qty:2}]};
-const money = value => `${value.toLocaleString('en-US')}₫`;
+const cart = {items:[{name:'Trà Mâm Xôi Tứ Vị',regular:19.99,price:12.99,image:'tra-mam-xoi-1.jpg',tag:'2-Box Bundle',qty:2}]};
+const money = value => `$${value.toFixed(2)}`;
 function renderCart(){
   cart.items.forEach(item=>{if(!item.qty)item.qty=1});
   $('#cart-items').innerHTML=cart.items.map((item,i)=>`<div class="cart-item"><img src="${imagePath(item.image)}" alt=""><div class="cart-item-copy"><h3>${item.name}</h3><div class="cart-item-prices"><del>${money(item.regular)}</del><strong>${money(item.price)}</strong>${item.tag?`<span class="cart-tag">${item.tag}</span>`:''}</div><div class="cart-item-actions"><div class="qty"><button type="button" data-cart="decrease" data-index="${i}" aria-label="Decrease quantity for ${item.name}">${icon('minus')}</button><input value="${item.qty}" aria-label="Quantity for ${item.name}" readonly><button type="button" data-cart="increase" data-index="${i}" aria-label="Increase quantity for ${item.name}">${icon('plus')}</button></div><button class="remove-item" type="button" data-cart="remove" data-index="${i}" aria-label="Remove ${item.name}">${icon('trash')}</button><span class="cart-save">${money((item.regular-item.price)*item.qty)} saved</span></div></div></div>`).join('');
@@ -92,7 +95,7 @@ function addToCart(){
   if(state.offer==='complete'){
     cart.items.forEach(item=>{item.qty=(item.qty||1)+1});
   }else{
-    const product=cart.items.find(item=>item.name.startsWith('Trà Mâm Xôi'));if(product)product.qty=(product.qty||1)+1;else cart.items.unshift({name:'Trà Mâm Xôi Tứ Vị',regular:199000,price:149000,image:'tra-mam-xoi-1.jpg',qty:1});
+    const product=cart.items.find(item=>item.name.startsWith('Trà Mâm Xôi'));if(product)product.qty=(product.qty||1)+1;else cart.items.unshift({name:'Trà Mâm Xôi Tứ Vị',regular:19.99,price:14.99,image:'tra-mam-xoi-1.jpg',qty:1});
   }
   renderCart();setCart(true);
 }
@@ -104,11 +107,20 @@ function setupInteractions(){
     const offer=event.target.closest('[data-offer]');if(offer){state.offer=offer.dataset.offer;renderOffers();return}
     const mini=event.target.closest('[data-mini]');if(mini){state.mini=Number(mini.dataset.mini);renderMiniReviews();return}
     const story=event.target.closest('[data-story]');if(story){updateStory(Number(story.dataset.story));return}
+    const star=event.target.closest('[data-star]');if(star){state.feedbackRating=Number(star.dataset.star);renderFeedbackStars();return}
     const cartAction=event.target.closest('[data-cart]');if(cartAction){const item=cart.items[Number(cartAction.dataset.index)];const action=cartAction.dataset.cart;if(action==='remove')cart.items.splice(Number(cartAction.dataset.index),1);if(action==='increase')item.qty++;if(action==='decrease')item.qty=Math.max(1,item.qty-1);renderCart();return}
     if(event.target.closest('.add-to-cart')){addToCart();return}
     if(event.target.closest('.cart-toggle')){setCart(true);return}if(event.target.closest('.cart-close,.cart-backdrop')){setCart(false);return}
     if(event.target.closest('.menu-toggle')){setMenu(true);return}if(event.target.closest('.mobile-menu-close,.menu-backdrop,.mobile-menu a')){setMenu(false);return}
     if(event.target.closest('.search-toggle')){$('.search-panel').classList.add('is-open');$('.search-panel').setAttribute('aria-hidden','false');$('#search-input').focus();return}if(event.target.closest('.search-close')){$('.search-panel').classList.remove('is-open');return}
+  });
+  $('#feedback-form').addEventListener('submit',event=>{
+    event.preventDefault();
+    const body=$('#feedback-text').value.trim();
+    if(!body)return;
+    event.target.reset();
+    state.feedbackRating=5;renderFeedbackStars();
+    alert('Thanks for your feedback!');
   });
   let startX=0;$('.gallery-stage').addEventListener('pointerdown',e=>{startX=e.clientX});$('.gallery-stage').addEventListener('pointerup',e=>{const delta=e.clientX-startX;if(Math.abs(delta)>40)updateGallery(state.gallery+(delta<0?1:-1))});
   window.addEventListener('resize',()=>updateStory(state.story));
@@ -117,4 +129,4 @@ function setupInteractions(){
 function setupReveal(){
   const sections=document.querySelectorAll('.reveal-section');const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add('is-visible')}),{threshold:.12});sections.forEach(section=>observer.observe(section));
 }
-renderFeatures();renderGallery();renderOffers();renderMiniReviews();renderAccordions();renderStories();renderSteps();renderBenefits();renderStats();renderFaq();renderCart();setupInteractions();setupReveal();
+renderFeatures();renderGallery();renderOffers();renderMiniReviews();renderAccordions();renderStories();renderFeedbackStars();renderSteps();renderBenefits();renderStats();renderFaq();renderCart();setupInteractions();setupReveal();
