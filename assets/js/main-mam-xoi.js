@@ -39,8 +39,8 @@ function renderFeatures(){
   $('#feature-grid').innerHTML = DATA.features.map(([glyph,title,desc]) => `<div class="feature"><div class="feature-icon">${icon(glyph)}</div><div class="feature-title">${title}</div><div class="feature-desc">${desc}</div></div>`).join('');
 }
 function renderGallery(){
-  $('.gallery-track').innerHTML = DATA.gallery.map((src,i)=>`<div class="gallery-slide" aria-hidden="${i!==0}"><img src="${imagePath(src)}" alt="Mộc Tâm Raspberry Leaf Tea"></div>`).join('');
-  $('.thumbnail-track').innerHTML = DATA.gallery.map((src,i)=>`<button type="button" class="thumbnail ${i===0?'active':''}" data-gallery="${i}" aria-label="View tea photo ${i+1}"><img src="${imagePath(src)}" alt="Mộc Tâm Raspberry Leaf Tea"></button>`).join('');
+  $('.gallery-track').innerHTML = DATA.gallery.map((src,i)=>`<div class="gallery-slide" aria-hidden="${i!==0}"><img src="${imagePath(src)}" alt="Four-Herb Raspberry Leaf Tea"></div>`).join('');
+  $('.thumbnail-track').innerHTML = DATA.gallery.map((src,i)=>`<button type="button" class="thumbnail ${i===0?'active':''}" data-gallery="${i}" aria-label="View tea photo ${i+1}"><img src="${imagePath(src)}" alt="Four-Herb Raspberry Leaf Tea"></button>`).join('');
   $('.gallery-dots').innerHTML = DATA.gallery.map((_,i)=>`<button type="button" class="${i===0?'active':''}" data-gallery="${i}" aria-label="Load slide 1 of ${i+1}"></button>`).join('');
 }
 function updateGallery(index){
@@ -53,8 +53,8 @@ function updateGallery(index){
 function offerMarkup(){
   const selected=state.offer==='complete';
   return `<div class="offer-title"><span>TODAY'S OFFER</span></div><div class="offer-options">
-    <button type="button" class="offer-card standard ${!selected?'selected':''}" data-offer="standard"><div class="offer-box"><span class="offer-radio"></span><span class="offer-content"><span class="offer-line"><span class="offer-name">Single Box</span><span class="offer-shipping">+ SHIPPING</span></span><span class="offer-save">Save 25%</span></span><span class="offer-prices"><strong>$14.99</strong><del>$19.99</del></span></div></button>
-    <button type="button" class="offer-card complete ${selected?'selected':''}" data-offer="complete"><div class="offer-box"><span class="popular">MOST POPULAR</span><span class="offer-top"><span class="offer-radio"></span><span class="offer-content"><span class="offer-line"><span class="offer-name">2-Box Bundle</span><span class="offer-shipping">+ SHIPPING</span></span><span class="offer-save">Save 35%</span></span><span class="offer-prices"><strong>$25.98</strong><del>$39.98</del></span></span><span class="bundle-products"><span class="bundle-product"><img src="${imagePath('tra-mam-xoi-1.jpg')}" alt=""><strong>Trà Mâm Xôi<br>Mộc Tâm</strong><span class="bundle-price">$12.99 <del>$19.99</del></span></span><span class="bundle-product"><img src="${imagePath('tra-mam-xoi-1.jpg')}" alt=""><strong>Trà Mâm Xôi<br>Mộc Tâm</strong><span class="bundle-price">$12.99 <del>$19.99</del></span></span></span></div></button>
+    <button type="button" class="offer-card standard ${!selected?'selected':''}" data-offer="standard"><div class="offer-box"><span class="offer-radio"></span><span class="offer-content"><span class="offer-line"><span class="offer-name">1 Box</span></span></span><span class="offer-prices"><strong>$29.99</strong></span></div></button>
+    <button type="button" class="offer-card complete ${selected?'selected':''}" data-offer="complete"><div class="offer-box"><span class="popular">MOST POPULAR</span><span class="offer-radio"></span><span class="offer-content"><span class="offer-line"><span class="offer-name">2 Boxes</span></span><span class="offer-save">Save $9.99</span></span><span class="offer-prices"><strong>$49.99</strong></span></div></button>
   </div>`;
 }
 function renderOffers(){ $('#offer-section').innerHTML=offerMarkup(); }
@@ -78,26 +78,31 @@ function updateStory(index){
 function renderFeedbackStars(){
   $('#feedback-stars').innerHTML=[1,2,3,4,5].map(n=>`<button type="button" class="${n<=state.feedbackRating?'active':''}" data-star="${n}" aria-label="${n} star${n>1?'s':''}">${icon('star')}</button>`).join('');
 }
+function renderDelivery(){
+  const fmt=d=>d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  const start=new Date();start.setDate(start.getDate()+3);
+  const end=new Date();end.setDate(end.getDate()+8);
+  $('#delivery-line').innerHTML=`<span class="delivery-icon">${icon('shipping')}</span><span>Estimated delivery: <strong>${fmt(start)} – ${fmt(end)}</strong></span>`;
+}
 function renderSteps(){ $('#steps').innerHTML=DATA.steps.map(([title,body],i)=>`<div class="step"><span class="step-number">${i+1}</span><h3>${title}</h3><p>${body}</p></div>`).join(''); }
 function renderBenefits(){ $('#benefit-list').innerHTML=DATA.benefits.map(([glyph,title,body])=>`<div class="benefit"><h3>${icon(glyph)}${title}</h3><p>${body}</p></div>`).join(''); }
 function renderStats(){ $('#stats').innerHTML=DATA.stats.map(([num,body])=>`<div class="stat"><span class="stat-ring">${num}</span><p>${body}</p></div>`).join(''); }
 function renderFaq(){ $('#faq-list').innerHTML=DATA.faq.map(([glyph,title,body])=>`<details class="faq-item"><summary><span class="faq-icon">${icon(glyph)}</span><span>${title}</span><span class="faq-chevron">${icon('caret')}</span></summary><div class="faq-answer">${body}</div></details>`).join(''); }
 
-const cart = {items:[{name:'Trà Mâm Xôi Tứ Vị',regular:19.99,price:12.99,image:'tra-mam-xoi-1.jpg',tag:'2-Box Bundle',qty:2}]};
+const cart = {items:[]};
 const money = value => `$${value.toFixed(2)}`;
 function renderCart(){
   cart.items.forEach(item=>{if(!item.qty)item.qty=1});
-  $('#cart-items').innerHTML=cart.items.map((item,i)=>`<div class="cart-item"><img src="${imagePath(item.image)}" alt=""><div class="cart-item-copy"><h3>${item.name}</h3><div class="cart-item-prices"><del>${money(item.regular)}</del><strong>${money(item.price)}</strong>${item.tag?`<span class="cart-tag">${item.tag}</span>`:''}</div><div class="cart-item-actions"><div class="qty"><button type="button" data-cart="decrease" data-index="${i}" aria-label="Decrease quantity for ${item.name}">${icon('minus')}</button><input value="${item.qty}" aria-label="Quantity for ${item.name}" readonly><button type="button" data-cart="increase" data-index="${i}" aria-label="Increase quantity for ${item.name}">${icon('plus')}</button></div><button class="remove-item" type="button" data-cart="remove" data-index="${i}" aria-label="Remove ${item.name}">${icon('trash')}</button><span class="cart-save">${money((item.regular-item.price)*item.qty)} saved</span></div></div></div>`).join('');
+  $('#cart-items').innerHTML=cart.items.map((item,i)=>`<div class="cart-item"><img src="${imagePath(item.image)}" alt=""><div class="cart-item-copy"><h3>${item.name}</h3><div class="cart-item-prices">${item.regular>item.price?`<del>${money(item.regular)}</del>`:''}<strong>${money(item.price)}</strong>${item.tag?`<span class="cart-tag">${item.tag}</span>`:''}</div><div class="cart-item-actions"><div class="qty"><button type="button" data-cart="decrease" data-index="${i}" aria-label="Decrease quantity for ${item.name}">${icon('minus')}</button><input value="${item.qty}" aria-label="Quantity for ${item.name}" readonly><button type="button" data-cart="increase" data-index="${i}" aria-label="Increase quantity for ${item.name}">${icon('plus')}</button></div><button class="remove-item" type="button" data-cart="remove" data-index="${i}" aria-label="Remove ${item.name}">${icon('trash')}</button>${item.regular>item.price?`<span class="cart-save">${money((item.regular-item.price)*item.qty)} saved</span>`:''}</div></div></div>`).join('');
   const subtotal=cart.items.reduce((sum,item)=>sum+item.price*item.qty,0);const savings=cart.items.reduce((sum,item)=>sum+(item.regular-item.price)*item.qty,0);const count=cart.items.reduce((sum,item)=>sum+item.qty,0);
-  $('.cart-subtotal').textContent=money(subtotal);$('.cart-savings').textContent=`-${money(savings)}`;$('.cart-item-count').textContent=`${count} items`;$('.cart-toggle').setAttribute('aria-label',`Cart ${count} items`);$('.cart-count').textContent=count;
+  $('.cart-subtotal').textContent=money(subtotal);$('.cart-savings').textContent=savings?`-${money(savings)}`:money(0);$('.cart-item-count').textContent=`${count} items`;$('.cart-toggle').setAttribute('aria-label',`Cart ${count} items`);$('.cart-count').textContent=count;
 }
 function setCart(open){state.cart=open;$('#cart-drawer').classList.toggle('is-open',open);$('#cart-drawer').setAttribute('aria-hidden',String(!open));$('.cart-backdrop').hidden=!open;document.body.classList.toggle('drawer-open',open)}
 function addToCart(){
-  if(state.offer==='complete'){
-    cart.items.forEach(item=>{item.qty=(item.qty||1)+1});
-  }else{
-    const product=cart.items.find(item=>item.name.startsWith('Trà Mâm Xôi'));if(product)product.qty=(product.qty||1)+1;else cart.items.unshift({name:'Trà Mâm Xôi Tứ Vị',regular:19.99,price:14.99,image:'tra-mam-xoi-1.jpg',qty:1});
-  }
+  const offer=state.offer==='complete'
+    ? {name:'Four-Herb Raspberry Leaf Tea',regular:59.98,price:49.99,image:'tra-mam-xoi-1.jpg',tag:'2 Boxes'}
+    : {name:'Four-Herb Raspberry Leaf Tea',regular:29.99,price:29.99,image:'tra-mam-xoi-1.jpg',tag:'1 Box'};
+  const product=cart.items.find(item=>item.tag===offer.tag);if(product)product.qty=(product.qty||1)+1;else cart.items.unshift({...offer,qty:1});
   renderCart();setCart(true);
 }
 function setMenu(open){state.menu=open;$('.mobile-menu').classList.toggle('is-open',open);$('.mobile-menu').setAttribute('aria-hidden',String(!open));$('.menu-backdrop').hidden=!open;$('.menu-toggle').setAttribute('aria-expanded',String(open));document.body.classList.toggle('drawer-open',open)}
@@ -132,4 +137,4 @@ function setupInteractions(){
 function setupReveal(){
   const sections=document.querySelectorAll('.reveal-section');const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add('is-visible')}),{threshold:.12});sections.forEach(section=>observer.observe(section));
 }
-renderFeatures();renderGallery();renderOffers();renderMiniReviews();renderAccordions();renderStories();renderFeedbackStars();renderSteps();renderBenefits();renderStats();renderFaq();renderCart();setupInteractions();setupReveal();
+renderFeatures();renderGallery();renderOffers();renderMiniReviews();renderAccordions();renderStories();renderFeedbackStars();renderDelivery();renderSteps();renderBenefits();renderStats();renderFaq();renderCart();setupInteractions();setupReveal();
